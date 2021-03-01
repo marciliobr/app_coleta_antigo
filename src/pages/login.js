@@ -36,7 +36,8 @@ export default function login({ navigation }) {
 
 
     return (
-        <KeyboardAvoidingView enabled={Platform.OS == 'android'} behavior="padding" style={styles.container}>
+        <KeyboardAvoidingView enabled={Platform.OS == 'android'} behavior="height" style={styles.container}>
+            
             <Image source={logo} />
 
             <View style={styles.form}>
