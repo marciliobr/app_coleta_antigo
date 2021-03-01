@@ -1,3 +1,7 @@
 /node_modules/
 /.expo/
 /.git .gitignore/
+
+.expo
+node_modules
+.gitignore
