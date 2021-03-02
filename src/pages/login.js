@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View, KeyboardAvoidingView, Platform, Image, Text, TextInput, TouchableOpacity, StyleSheet, } from 'react-native';
 
 import api from '../server/api';
@@ -11,28 +12,39 @@ export default function login({ navigation }) {
     const [login, setLogin] = useState('');
     const [senha, setSenha] = useState('');
 
+    const storeData = async (key, value) => {
+        try {
+          await AsyncStorage.setItem(key, value)
+        } catch (e) {
+          console.log(e)
+        }
+      }
+    
     async function handleSubmit() {
 
         const response = await api.post('/usuario/validar', {
             login,
             senha
         })
-
+        
         const { _id } = response.data;
 
         if (_id != '0') {
-
-            await AsyncStorage.setItem('usuario', _id);
-            await AsyncStorage.setItem('login', login);
-            navigation.navigate('list');
+            storeData('@usuario', _id)
+            storeData('@login', login)
+            navigation.navigate('Faça sua solicitação');
 
         } else {
 
+            storeData('@usuario', "")
+            storeData('@login', "")
             setSituacao("Login e senha inválidos!")
         }
 
 
     }
+
+    
 
 
     return (
